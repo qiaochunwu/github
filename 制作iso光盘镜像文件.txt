@@ -1,0 +1,2 @@
+yum -y install genisoimage
+genisoimage -J -R -o 要制作的文件
