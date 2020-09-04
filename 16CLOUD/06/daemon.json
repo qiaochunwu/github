@@ -1,0 +1,5 @@
+{
+    "exec-opts": ["native.cgroupdriver=systemd"],
+    "registry-mirrors": ["https://hub-mirror.c.163.com"],
+    "insecure-registries":["192.168.1.100:5000", "registry:5000"]
+}

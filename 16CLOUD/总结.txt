@@ -1,0 +1,39 @@
+1   结构和安装
+2   核心命令和控制器
+     临时性的测试
+         kubectl  run
+     排错三兄弟
+         kubectl  get   状态及名称的查看
+         kubectl  describe   详细信息及参数说明
+         kubectl  logs  日志及报错信息
+         附加手段：kubectl  exec  进去看看
+     管理资源对象
+         kubectl  apply
+         kubectl  create
+         kubectl  delete
+     POD 和控制器
+        Deployment
+        DaemonSet
+        Job/Cronjob 
+        HPA（部署完 prometheus）
+        StatefulSet（扩展知识）
+     服务和存储
+        service
+           ClusterIP                只能够在集群内部可以访问，如果想在集群外访问，使用 Ingress
+           NodePort               可以在集群外访问，但使用高端端口
+           LoadBalancer         云平台结合（一般需要云平台支持，或付费解决）
+           ExternalName        使用内部名称映射外部的域名
+           None                     直接解析到POD的IP，没有负载均衡
+        存储卷
+           configmap             管理配置文件
+           emptydir                临时数据
+           hostpath                映射主机目录
+           PV/PVC                  持久卷服务
+                NFS
+                CEPH              （扩展知识）
+     性能/监控
+          metrics-server        CPU、内存信息
+          Dashboard             web管理页面
+          Prometheus            监控集群
+          
+
