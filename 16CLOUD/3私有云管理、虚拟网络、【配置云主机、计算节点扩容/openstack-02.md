@@ -150,8 +150,6 @@ server 192.168.1.250 iburst
 
 修改 apache 配置
 
-（如果浏览器访问不了）
-
 ```shell
 [root@openstack ~]# vim /etc/httpd/conf.d/15-horizon_vhost.conf 
 # 在配置文件倒数第三行添加

@@ -82,26 +82,6 @@ graph TB
 [root@localhost ~]# qemu-img info vmhost.img #查看信息
 ```
 
-###### 虚拟机配置文件
-
-官方文档地址 https://libvirt.org/format.html
-
-1、拷贝 node_base.xml 到虚拟机中
-
-2、拷贝 node_base.xml 到 /etc/libvirt/qemu/虚拟机名字.xml
-
-3、修改配置文件，启动运行虚拟机
-
-```shell
-[root@localhost ~]# cp node_base.xml /etc/libvirt/qemu/vmhost.xml
-[root@localhost ~]# vim /etc/libvirt/qemu/vmhost.xml
-2:	<name>vmhost</name>
-3:	<memory unit='KB'>1024000</memory>
-4:	<currentMemory unit='KB'>1024000</currentMemory>
-5:	<vcpu placement='static'>2</vcpu>
-26:	<source file='/var/lib/libvirt/images/vmhost.img'/>
-```
-
 ###### 虚拟网络配置
 
 虚拟网络管理命令
@@ -142,9 +122,7 @@ graph TB
 [root@localhost ~]# ifconfig # 查看验证
 ```
 
-#### 虚拟机管理
-
-虚拟机管理命令
+###### 虚拟机管理命令
 
 |命令|说明|
 |----|----|
@@ -160,6 +138,27 @@ graph TB
 |virsh dominfo|查看虚拟机摘要信息|
 |virsh domiflist|查看虚拟机网卡信息|
 |virsh domblklist|查看虚拟机硬盘信息|
+
+
+###### 虚拟机配置文件
+
+官方文档地址 https://libvirt.org/format.html
+
+1、拷贝 node_base.xml 到虚拟机中
+
+2、拷贝 node_base.xml 到 /etc/libvirt/qemu/虚拟机名字.xml
+
+3、修改配置文件，启动运行虚拟机
+
+```shell
+[root@localhost ~]# cp node_base.xml /etc/libvirt/qemu/vmhost.xml
+[root@localhost ~]# vim /etc/libvirt/qemu/vmhost.xml
+2:	<name>vmhost</name>
+3:	<memory unit='KB'>1024000</memory>
+4:	<currentMemory unit='KB'>1024000</currentMemory>
+5:	<vcpu placement='static'>2</vcpu>
+26:	<source file='/var/lib/libvirt/images/vmhost.img'/>
+```
 
 ###### 创建虚拟机
 

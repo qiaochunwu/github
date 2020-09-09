@@ -18,8 +18,8 @@
 [root@repo ~]# yum install -y chrony
 [root@repo ~]# vim /etc/chrony.conf
 # 注释掉所有 server 开头的行，添加
-server ntp.aliyun.com iburst 阿里云服务时间源
-bindacqaddress 0.0.0.0 
+server ntp.aliyun.com iburst
+bindacqaddress 0.0.0.0
 allow 0/0
 local stratum 10
 [root@repo ~]# systemctl enable chronyd

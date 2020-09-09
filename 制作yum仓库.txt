@@ -1,0 +1,29 @@
+ 在yum仓库主机上：  
+ yum install -y net-tools lftp rsync psmisc vim-enhanced tree vsftpd  bash-completion createrepo lrzsz iproute
+ mkdir /var/ftp/localrepo
+ cd /var/ftp/localrepo/
+ createrepo .
+ createrepo --update .
+ 
+
+上传rpm包后
+执行命令create --update
+             yum makecache
+
+host机配置yum仓库：
+
+vim /etc/yum.repos.d/local.repo
+[local_repo]
+name=CentOS-$releasever – Localrepo
+baseurl=ftp://yum仓库机地址ip/localrepo
+enabled=1
+gpgcheck=0
+验证：谁否安装
+yum makecache 
+yum repolist 
+
+常用软件包
+yum install -y net-tools lftp rsync psmisc vim-enhanced tree lrzsz bash-completion lrzsz iproute
+
+
+

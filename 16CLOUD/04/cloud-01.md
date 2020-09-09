@@ -94,9 +94,11 @@ gpgcheck=0
 ```
 #### 优化系统服务
 ```shell
-[root@ecs-host ~]# systemctl stop postfix
-[root@ecs-host ~]# yum remove -y postfix firewalld-*
+[root@ecs-host ~]# systemctl stop postfix atd polkit tuned
+[root@ecs-host ~]# yum remove -y postfix at audit tuned polkit kexec-tools firewalld-*
 [root@ecs-host ~]# yum install chrony
+[root@ecs-host ~]# chkconfig network on
+[root@ecs-host ~]# rm -f /etc/sysconfig/network-scripts/{ifcfg-eth1,ifcfg-eth2,ifcfg-eth3,ifcfg-eth4}
 [root@ecs-host ~]# vim /etc/chrony.conf 
 # 注释掉 server 开头行，添加下面的配置
 server ntp.myhuaweicloud.com minpoll 4 maxpoll 10 iburst
