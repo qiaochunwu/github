@@ -184,6 +184,20 @@ Hello Tedu
 [root@node-0001 ~]# docker rm -f de46e6254efd
 # 删除所有容器
 [root@node-0001 ~]# docker rm -f $(docker ps -aq)
+容器启动appach
+1、启动一个centos容器
+2、配置yum源用docker cp 命令将yum源拷贝到容器里
+3、yum安装appach
+4、查看http的启动服务vim /usr/lib/systemd/system/httpd.service
+   查看环境变量vim /etc/sysconfig/httpd
+   设置环境变量export LANG=C
+   启动服务/usr/sbin/httpd -DFOREGROUND
+   
+   
+
+   
+   
+
 ```
 
 总结：
