@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myweb
+spec:
+  selector:
+    matchLabels:
+      app: myweb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: myweb
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: node-0003
+      containers:
+      - name: myos
+        image: 192.168.1.100:5000/myos:v1804
+        stdin: true
+        tty: true
+        #volumeMounts:
+        #- name: web-site
+        #  mountPath: /var/www/html
+      - name: apache
+        image: 192.168.1.100:5000/myos:httpd
+        ports:
+        - protocol: TCP
+          containerPort: 80
+        #volumeMounts:
+        #- name: my-cache
+        #  mountPath: /var/cache
+        #- name: my-data
+        #  mountPath: /var/www/html
+      #volumes:
+      #- name: my-cache
+      #  emptyDir: {}
+      #- name: my-data
+      #  hostPath:
+      #    path: /var/webroot
+      #    type: DirectoryOrCreate
+      #- name: web-site
+      #  persistentVolumeClaim:
+      #    claimName: pvc-nfs

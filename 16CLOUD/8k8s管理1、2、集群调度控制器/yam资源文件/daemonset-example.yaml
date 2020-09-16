@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: daemonset-example
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: myapp1
+  template:
+    metadata:
+      labels:
+        app: myapp1
+    spec:
+      #tolerations:
+      #- key: "node-role.kubernetes.io/master"
+      #  operator: "Equal"
+      #  value: ""
+      #  effect: "NoSchedule"
+      containers:
+      - name: myos
+        image: 192.168.1.100:5000/myos:v1804
+        stdin: true
+        tty: true
+      restartPolicy: Always

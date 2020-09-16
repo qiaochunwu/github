@@ -1,0 +1,16 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cronjob-pi
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: pi
+            image: 192.168.1.100:5000/myos:v1804
+            command: ["sleep",  "30"]
+          restartPolicy: OnFailure

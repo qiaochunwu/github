@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-example
+spec:
+  selector:
+    matchLabels:
+      app: myapp-php
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: myapp-php
+    spec:
+      #affinity:
+      #  nodeAffinity:
+      #    preferredDuringSchedulingIgnoredDuringExecution:
+      #    - weight: 1
+      #      preference:
+      #        matchExpressions:
+      #        - key: cpu
+      #          operator: In
+      #          values:
+      #          - high
+      #    requiredDuringSchedulingIgnoredDuringExecution:
+      #      nodeSelectorTerms:
+      #      - matchExpressions:
+      #        - key: mem
+      #          operator: In
+      #          values:
+      #          - high
+      #          - mid
+      containers:
+      - name: php-fpm
+        image: 192.168.1.100:5000/myos:php-fpm
+        ports:
+        - protocol: TCP
+          containerPort: 9000
+      restartPolicy: Always

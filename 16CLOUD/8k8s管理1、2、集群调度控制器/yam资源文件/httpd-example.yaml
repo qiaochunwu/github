@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-example
+spec:
+  selector:
+    matchLabels:
+      app: myapp-httpd
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: myapp-httpd
+    spec:
+      containers:
+      - name: httpd
+        image: 192.168.1.100:5000/myos:httpd
+        ports:
+        - protocol: TCP
+          containerPort: 80
+      restartPolicy: Always

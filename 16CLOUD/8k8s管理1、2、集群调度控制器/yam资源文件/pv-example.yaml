@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name:  pv-nfs
+  labels:
+    app: web-nfs
+spec:
+  volumeMode: Filesystem
+  capacity:
+    storage: 10Gi
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /var/webroot
+    server: 192.168.1.100

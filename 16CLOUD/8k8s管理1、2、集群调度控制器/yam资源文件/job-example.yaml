@@ -1,0 +1,13 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi
+spec:
+  template:
+    spec:
+      containers:
+      - name: pi
+        image: 192.168.1.100:5000/myos:v1804
+        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(500)"]
+      restartPolicy: OnFailure

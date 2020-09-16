@@ -1,0 +1,86 @@
+---
+- name:
+  hosts:
+  - nodes
+  vars:
+    master: '192.168.1.21:6443'
+    token: 'fm6kui.mp8rr3akn74a3nyn'
+    token_hash: 'sha256:f46dd7ee29faa3c096cad189b0f9aedf59421d8a881f7623a543065fa6b0088c'
+  tasks:
+  - name: disable swap
+    lineinfile:
+      path: /etc/fstab
+      regexp: 'swap'
+      state: absent
+    notify: disable swap
+  - name: Ensure SELinux is set to disabled mode
+    lineinfile:
+      path: /etc/selinux/config
+      regexp: '^SELINUX='
+      line: SELINUX=disabled
+    notify: disable selinux
+  - name: remove the firewalld
+    yum:
+      name:
+      - firewalld 
+      - firewalld-filesystem
+      state: absent
+  - name: install k8s node tools
+    yum:
+      name:
+      - kubeadm
+      - kubelet
+      - docker-ce
+      - ipvsadm
+      - ipset
+      state: present
+      update_cache: yes
+  - name: Create a directory if it does not exist
+    file:
+      path: /etc/docker
+      state: directory
+      mode: '0755'
+  - name: Copy file with /etc/hosts
+    copy:
+      src: files/hosts
+      dest: /etc/hosts
+      owner: root
+      group: root
+      mode: '0644'
+  - name: Copy file with /etc/docker/daemon.json
+    copy:
+      src: files/daemon.json
+      dest: /etc/docker/daemon.json
+      owner: root
+      group: root
+      mode: '0644'
+  - name: Copy file with /etc/sysctl.d/k8s.conf
+    copy:
+      src: files/k8s.conf
+      dest: /etc/sysctl.d/k8s.conf
+      owner: root
+      group: root
+      mode: '0644'
+    notify: enable sysctl args
+  - name: enable k8s node service
+    service:
+      name: "{{ item }}"
+      state: started
+      enabled: yes
+    with_items:
+    - docker
+    - kubelet
+  - name: check node state
+    stat:
+      path: /etc/kubernetes/kubelet.conf
+    register: result
+  - name: node join
+    shell: kubeadm join '{{ master }}' --token '{{ token }}' --discovery-token-ca-cert-hash '{{ token_hash }}'
+    when: result.stat.exists == False
+  handlers:
+  - name: disable swap
+    shell: swapoff -a
+  - name: disable selinux
+    shell: setenforce 0
+  - name: enable sysctl args
+    shell: sysctl --system

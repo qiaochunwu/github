@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myweb
+spec:
+  selector:
+    matchLabels:
+      app: myweb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: myweb
+    spec:
+      containers:
+      - name: php-fpm
+        image: 192.168.1.100:5000/myos:php-fpm
+      - name: nginx
+        image: 192.168.1.100:5000/myos:nginx
+        ports:
+        - protocol: TCP
+          containerPort: 80
+        volumeMounts:
+        - name: nginx-php
+          subPath: nginx.conf
+          mountPath: /usr/local/nginx/conf/nginx.conf
+      volumes:
+      - name: nginx-php
+        configMap:
+          name: nginx-conf

@@ -1,0 +1,21 @@
+---
+- name: web 集群安装
+  hosts: web
+  tasks:
+  - name: 安装 apache 服务 
+    yum:
+      name: httpd,php
+      state: latest
+      update_cache: yes
+  - name: 配置 httpd 服务 
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+  - name: 部署网站网页
+    unarchive:
+      src: files/webhome.tar.gz
+      dest: /var/www/html/
+      copy: yes
+      owner: apache
+      group: apache

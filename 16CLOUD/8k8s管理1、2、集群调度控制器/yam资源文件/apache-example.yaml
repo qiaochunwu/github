@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-example
+spec:
+  selector:
+    matchLabels:
+      app: myapp-apache
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: myapp-apache
+    spec:
+      #nodeName: node-0001
+      containers:
+      - name: apache
+        image: 192.168.1.100:5000/myos:httpd
+        ports:
+        - protocol: TCP
+          containerPort: 80
+      restartPolicy: Always

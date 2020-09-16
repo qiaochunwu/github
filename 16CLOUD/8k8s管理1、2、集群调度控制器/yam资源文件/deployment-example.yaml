@@ -1,0 +1,21 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-example
+spec:
+  selector:
+    matchLabels:
+      app: myos
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: myos
+    spec:
+      containers:
+      - name: myos
+        image: 192.168.1.100:5000/myos:v1804
+        stdin: true
+        tty: true
+      restartPolicy: Always
