@@ -149,6 +149,25 @@ node-0003
 
 5、启动集群 [以下操作仅在 hadoop1 上执行]
 
+- 1  停止服务
+      /usr/local/hadoop/sbin/stop-dfs.sh
+
+  2  删除所有节点数据文件
+      rm  -rf   /var/hadoop
+      rm  -rf   /usr/local/hadoop/logs
+
+  3  同步配置文件
+      for i in node-{0001..0003};do
+          rsync -aXSH --delete /usr/local/hadoop ${i}:/usr/local/
+      done
+
+  4   格式化  &  启动服务
+       mkdir   /var/hadoop
+       /usr/local/hadoop/bin/hdfs namenode -format
+       /usr/local/hadoop/sbin/start-dfs.sh
+
+ 
+
 ```shell
 [root@hadoop1 ~]# for i in node-{0001..0003};do
                       rsync -aXSH --delete /usr/local/hadoop ${i}:/usr/local/
@@ -170,6 +189,26 @@ node-0003
 ... ...
 -------------------------------------------------
 Live datanodes (3):
+如果错误了
+1  停止服务
+    /usr/local/hadoop/sbin/stop-dfs.sh
+
+2  删除所有节点数据文件
+    rm  -rf   /var/hadoop
+    rm  -rf   /usr/local/hadoop/logs
+
+3  同步配置文件
+    for i in node-{0001..0003};do
+        rsync -aXSH --delete /usr/local/hadoop ${i}:/usr/local/
+    done
+
+4   格式化  &  启动服务
+     mkdir   /var/hadoop
+     /usr/local/hadoop/bin/hdfs namenode -format
+     /usr/local/hadoop/sbin/start-dfs.sh
+
+  
+
 ```
 
 ###### mapreduce部署
