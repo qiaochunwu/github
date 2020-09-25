@@ -1,7 +1,0 @@
-::1		localhost localhost.localdomain localhost6 localhost6.localdomain6
-127.0.0.1	localhost localhost.localdomain localhost4 localhost4.localdomain4
-192.168.1.41	es-0001
-192.168.1.42	es-0002
-192.168.1.43	es-0003
-192.168.1.44	es-0004
-192.168.1.45	es-0005

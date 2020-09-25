@@ -1,6 +1,0 @@
-node_install.yaml     #为k8s计算节点安装剧本，用时在master主机上执行命令kubeadm token list 查看token值
-#命令openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt |openssl rsa -pubin -outform der |openssl dgst -sha256 -hex
-#查看token的哈希值，并且根据实际需求修改此剧本。
-#files目录存放在ansible目录下，为k8s配置所需要的的配置文件
-  shell: kubeadm join '{{ master }}' --token '{{ token }}' --discovery-token-ca-cert-hash '{{ token_hash }}'
-  参考k8s执行时指定的生成的日志文件master-init.log
