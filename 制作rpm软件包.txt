@@ -1,0 +1,51 @@
+rpm-build软件包
+1）、安装rpm-build软件包 
+yum -y install rpm-build
+
+2）、生成rpmbuild目录结构
+ rpmbuild -ba nginx.spec #以.spec结尾。
+ # ls /root/rpmbuild/ 
+BUILD BUILDROOT RPMS SOURCES SPECS SRPMS 
+3)、准备工作，将源码软件复制到SOURCES目录
+4)、创建并修改SPEC配置文件 
+vim  /root/rpmbuild/SPECS/zabbix.spec  #以.SPEC结尾
+
+Name:zabbix                        #源码包软件名称。【不能错】 
+Version:3.4.4                      #源码包软件的实际版本号。【不能错】
+ Release: 22                  #发布序列号，标明第几次打包，后面可使用%{release}引用 
+Summary: zabbix agentd      #软件包的内容概要。自定义 
+ 
+#Group:         #软件分组。（一个组中可以有多个软件包，输入组名安装软件包，可都安装。） 
+License: GPL   #软件授权方式，通常就是GPL URL: www.zabbix.com              
+ #网址 Source0: zabbix-3.4.4.tar.gz  #源码包文件名。 【不能错】 
+ 
+#BuildRequires:               #源码编译的依赖。（写和写都不能解决依赖，仅起到标注作用。） 
+#Requires                      #yum安装的依赖。 
+ 
+%description                   #定义rpm包的描述信息 
+ This is zabbix rpm from dayu 
+%post #rpm包安装后执行的脚本。今后有人在使用这个软件包安装时，就会触发下面的脚本内容。 
+useradd -s /sbin/nologin zabbix 
+ 
+%prep #rpm包安装前执行的脚本 
+%setup -q #自动解压源码并cd 
+ 
+%build                            #定义编译软件包时的操作 
+./configure --enable-agent       #配置源码【需要修改】
+ make %{?_smp_mflags} 
+ 
+%install make install DESTDIR=%{buildroot} 
+ 
+ 
+%files
+ %doc                              #对哪个目录打包用来做rpm包 
+/usr/local/sbin/zabbix_agentd 
+/usr/local/bin/zabbix_get
+ /usr/local/bin/zabbix_sender
+ /usr/local/etc/zabbix_agentd.conf.d 
+/usr/local/etc/zabbix_agentd.conf
+ /usr/local/share/man/man1/zabbix_get.1
+ /usr/local/share/man/man1/zabbix_sender.1 
+/usr/local/share/man/man8/zabbix_agentd.8 
+ 
+%changelog 
