@@ -2,6 +2,7 @@
 yum -y install vsftpd
 2.修改配置文件
 vim +29 /etc/vsftpd/vsftpd.conf
+anonymous_enable=yes #允许匿名用户登录
 anon_upload_enable=YES #去掉#号，打开匿名用户上传。
 3.赋予/var/ftp/pub 其他用户可使用权限
 chmod o+w /var/ftp/pub
@@ -12,3 +13,4 @@ chmod o+w /var/ftp/pub
 
 
 真机访问FTP服务
+ftp://服务器ip
