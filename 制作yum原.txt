@@ -1,2 +1,0 @@
-yum  -y install createrepo
-createrrpo ./    #制作当前文件夹里的yum原文件
