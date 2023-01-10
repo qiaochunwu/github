@@ -1,0 +1,4 @@
+
+x=$(awk '$0~/Failed/&&$0!~/invalid/{ip[$11]++}END{for(i in ip){print i,ip[i]}}'  /var/log/secure | awk '$2>2')
+[ -z "$x" ] && exit
+echo "有人试图入侵服务器，相关信息是$x" | mail -s text root

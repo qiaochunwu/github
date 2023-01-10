@@ -1,0 +1,36 @@
+---
+- name: web 集群安装
+  hosts: web
+  tasks:
+    - name: 查找所有 .repo 文件
+      find:
+        paths: /etc/yum.repos.d
+        patterns: '*.repo'
+      register: files_to_delete
+    - name: 删除默认的 repo 文件
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      with_items: "{{ files_to_delete.files }}"
+    - name: 配置华为云私网 Yum 源
+      get_url:
+        url: http://mirrors.myhuaweicloud.com/repo/CentOS-Base-7.repo
+        dest: /etc/yum.repos.d/CentOS-Base.repo
+        mode: 0644
+    - name: 安装 apache 服务
+      yum:
+        name: httpd,bash-completion
+        state: latest
+        update_cache: yes
+    - name: 配置 httpd 服务
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+    - name: 部署网站网页
+      unarchive:
+        src: files/webhome.tar.gz
+        dest: /var/www/html/
+        copy: yes
+        owner: apache
+        group: apache

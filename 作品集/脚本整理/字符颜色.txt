@@ -1,0 +1,67 @@
+echo -e "\033[40m黑底白字\033[0m"  
+echo -e "\033[41m红底白字\033[0m"  
+echo -e "\033[42m绿底白字\033[0m"  
+echo -e "\033[43m黄底白字\033[0m"  
+echo -e "\033[44m蓝底白字\033[0m"  
+echo -e "\033[45m紫底白字\033[0m"  
+echo -e "\033[46m天蓝底白字\033[0m"  
+echo -e "\033[47m白底白字\033[0m" 
+
+#!/bin/bash
+#字符颜色显示
+#-e:允许echo使用转义
+#\033[:开始位
+#\033[0m:结束位
+#\033等同于\e
+echo -e "\033[30m黑色字\033[0m"   #（黑底在白色风格显示才明显）
+echo -e "\033[31m红色字\033[0m"  
+echo -e "\033[32m绿色字\033[0m"  
+echo -e "\033[33m黄色字\033[0m"  
+echo -e "\033[34m蓝色字\033[0m"  
+echo -e "\033[35m紫色字\033[0m"  
+echo -e "\033[36m天蓝字\033[0m"  
+echo -e "\033[37m白色字\033[0m"
+
+
+[root@localhost ~]#vim /etc/bashrc
+
+PS1="\e[1;36;40m[\u@\h \W]\\$\e[0m"
+# source /etc/bashrc
+
+其中PS1常用的参数含义如下：
+
+\d ：#代表日期，格式为weekday month date，例如："Mon Aug 1"
+\H ：#完整的主机名称
+\h ：#仅取主机的第一个名字
+\t ：#显示时间为24小时格式，如：HH：MM：SS
+\T ：#显示时间为12小时格式
+\A ：#显示时间为24小时格式：HH：MM
+\u ：#当前用户的账号名称
+\v ：#BASH的版本信息
+\w ：#完整的工作目录名称
+\W ：#利用basename取得工作目录名称，所以只会列出最后一个目录
+\# ：#下达的第几个命令
+\$ ：#提示字符，如果是root时，提示符为：# ，普通用户则为：$
+
+
+
+六、提示符报 -bash-4.2#
+
+原因是root在/root下面的几个配置文件丢失，丢失文件如下：
+  1、.bash_profile
+  2、.bashrc
+ 以上这些文件是每个用户都必备的文件。
+  使用以下命令从主默认文件重新拷贝一份配置信息到/root目录下,注销重新链接就恢复正常了 
+
+[root@localhost ~]#cp /etc/skel/.bashrc  /root/
+
+[root@localhost ~]#cp /etc/skel/.bash_profile  /root/
+
+Linux字符界面字符颜色显示
+
+标签：lin   字符界面   格式   拷贝   配置   范围   参数   host   时间   
+
+原文地址：https://www.cnblogs.com/zjz20/p/11628171.html
+
+
+
